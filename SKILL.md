@@ -319,21 +319,55 @@ feishu-reminder/
 
 ## 🎯 快速决策卡片
 
-**遇到以下情况，使用 feishu-reminder：**
+### 与 FlashMemo 的边界（最高优先级！）
+
+**核心原则：根据时间明确性选择工具**
+
+| 场景 | 关键词/表述 | 使用工具 |
+|------|------------|---------|
+| **明确定时任务** | "每天 X 点提醒我"、"每周一 X 点"、"X 分钟后通知我"、"X 月 X 日提醒我" | ✅ **feishu-reminder** |
+| **待办事项** | "代办"、"待办"、"要做的事"、"记得做 X"（无明确时间） | ✅ **FlashMemo** |
+
+**明确定时任务判定标准**（满足任一即使用 **feishu-reminder**）：
+- ✅ 包含具体时间点：`每天 9 点 `、` 每周一 10 点`、` 下午 3 点`
+- ✅ 包含相对时间：`30 分钟后 `、`1 小时后 `、`2 天后`
+- ✅ 包含具体日期：`3 月 15 日 `、` 下周五`、` 明天上午`
+- ✅ 包含周期性：`每天 `、` 每周 `、` 每月`、` 每个工作日`
+
+**待办事项判定标准**（使用 **FlashMemo**）：
+- ✅ 无明确时间：`记得做 X`、`代办：XXX`、`要做的事`
+- ✅ 模糊时间：`有空的时候 `、` 找时间`、` 尽快`
+- ✅ 计划性：`打算 `、` 准备`、` 计划`
+
+---
+
+### 使用 feishu-reminder 的场景
 
 | 用户说... | 第一反应 |
 |----------|---------|
 | "X 分钟后提醒我 XXX" | ✅ feishu_reminder_cron.py |
 | "每天 X 点提醒我 XXX" | ✅ feishu_reminder_cron.py + --repeat daily |
 | "每周一提醒我 XXX" | ✅ feishu_reminder_cron.py + --repeat weekly |
+| "X 月 X 日提醒我 XXX" | ✅ feishu_reminder_cron.py |
 | "我有哪些提醒" | ✅ feishu_reminder_list.py |
 | "删除 XXX 提醒" | ✅ feishu_reminder_delete.py |
 
-**与 FlashMemo 的区别：**
-- **FlashMemo**: 待办事项管理，需要用户主动查询或到时间推送一次
-- **feishu-reminder**: 定时推送工具，适合周期性、固定时间的主动提醒
+---
 
-**可以配合使用：**
+### 使用 FlashMemo 的场景
+
+| 用户说... | 第一反应 |
+|----------|---------|
+| "代办/待办：XXX" | ✅ flashmemo_store.py (memo) |
+| "记得做 XXX"（无时间） | ✅ flashmemo_store.py (memo) |
+| "有空的时候做 XXX" | ✅ flashmemo_store.py (memo) |
+| "记一下 XXX" | ✅ flashmemo_store.py (work/life) |
+| "花了 XXX 元" | ✅ flashmemo_store.py (account) |
+
+---
+
+### 配合使用示例
+
 ```
 用户："每周一 10 点提醒我写周报"
 
